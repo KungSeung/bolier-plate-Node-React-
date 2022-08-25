@@ -108,6 +108,11 @@ app.get('/api/users/logout', auth, (req, res) => {
   });
 });
 
+// React에서 req보냄
+app.get('/api/hello', (req, res) => {
+  res.send('Hello world ~');
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
