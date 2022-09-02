@@ -1,11 +1,12 @@
-import { Axios } from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../_actions/user_action';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
@@ -19,7 +20,7 @@ function LoginPage(props) {
   };
 
   const onSubmitHandler = (event) => {
-    event.preventDefault(); // refresh 방지
+    event.preventDefault(); // 페이지 refresh 방지
 
     let body = {
       email: Email,
@@ -27,8 +28,8 @@ function LoginPage(props) {
     };
 
     dispatch(loginUser(body)).then((response) => {
-      if (response.payload.success) {
-        props.history.push('/');
+      if (response.payload.loginSuccess) {
+        navigate('/');
       } else {
         alert('Error');
       }
@@ -47,11 +48,9 @@ function LoginPage(props) {
         height: '100vh',
       }}
     >
-      <form
-        style={{ display: 'flex', flexDirection: 'column' }}
-        onSubmit={onSubmitHandler}
-      >
+      <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={onSubmitHandler}>
         <label>Email</label>
+        {/* value와 onchange 부분에 state을 넣어줘야함 */}
         <input type="email" value={Email} onChange={onEmailHandler} />
         <label>Password</label>
         <input type="password" value={Password} onChange={onPasswordHandler} />
@@ -62,4 +61,4 @@ function LoginPage(props) {
   );
 }
 
-export default withRouter(LoginPage);
+export default LoginPage;

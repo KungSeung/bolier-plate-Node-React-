@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Axios from 'axios';
 import { auth } from '../_actions/user_action';
-import { response } from 'express';
 
 export default function (SpecificComponent, option, adminRoute = null) {
+  // option 인자에 들어가는 상태
   // null => 아무나 출입이 가능한 페이지
   // true => 로그인한 유저만 출입이 가능한 페이지
   // false => 로그인한 유저는 출입 불가능한 페이지
+  // 관리자를 허용하고 싶으면 adminRoute=true를 주면된다
 
   function AuthenticationCheck(props) {
     const dispatch = useDispatch();
@@ -24,6 +24,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
         } else {
           // 로그인 한 상태
           if (adminRoute && !response.payload.isAdmin) {
+            // admin이 아닌데 admin한 페이지를 가려고함
             props.history.push('/');
           } else {
             if (option === false) props.history.push('/');

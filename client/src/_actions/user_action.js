@@ -1,10 +1,8 @@
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import { LOGIN_USER, REGISTER_USER, AUTH_USER } from './types';
 
 export function loginUser(dataTosubmit) {
-  const request = Axios.post('/api/user/login', dataTosubmit).then(
-    (response) => response.data
-  );
+  const request = axios.post('/api/users/login', dataTosubmit).then((response) => response.data);
 
   return {
     type: LOGIN_USER,
@@ -13,9 +11,7 @@ export function loginUser(dataTosubmit) {
 }
 
 export function registerUser(dataTosubmit) {
-  const request = Axios.post('/api/user/register', dataTosubmit).then(
-    (response) => response.data
-  );
+  const request = axios.post('/api/users/register', dataTosubmit).then((response) => response.data);
 
   return {
     type: REGISTER_USER,
@@ -24,7 +20,8 @@ export function registerUser(dataTosubmit) {
 }
 
 export function auth() {
-  const request = Axios.get('/api/user/auth').then((response) => response.data);
+  // get request는 body가 필요없음
+  const request = axios.get('/api/users/auth').then((response) => response.data);
 
   return {
     type: AUTH_USER,

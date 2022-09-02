@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../../_actions/user_action';
-import { withRouter } from 'react-router-dom'; // history 사용가능
+// import { withRouter } from 'react-router-dom'; // props.history.push 사용가능
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
@@ -41,7 +43,7 @@ function RegisterPage(props) {
 
     dispatch(registerUser(body)).then((response) => {
       if (response.payload.success) {
-        props.history.push('/login');
+        navigate('/login');
       } else {
         alert('Falied to sign up');
       }
@@ -57,10 +59,7 @@ function RegisterPage(props) {
         height: '100vh',
       }}
     >
-      <form
-        style={{ display: 'flex', flexDirection: 'column' }}
-        onSubmit={onSubmitHandler}
-      >
+      <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={onSubmitHandler}>
         <label>Email</label>
         <input type="email" value={Email} onChange={onEmailHandler} />
 
@@ -71,11 +70,7 @@ function RegisterPage(props) {
         <input type="password" value={Password} onChange={onPasswordHandler} />
 
         <label>Confirm Password</label>
-        <input
-          type="password"
-          value={ConfirmPassword}
-          onChange={onConfirmPasswordHandler}
-        />
+        <input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
 
         <br></br>
         <button type="submit">회원가입</button>
@@ -84,4 +79,4 @@ function RegisterPage(props) {
   );
 }
 
-export default withRouter(RegisterPage);
+export default RegisterPage;
